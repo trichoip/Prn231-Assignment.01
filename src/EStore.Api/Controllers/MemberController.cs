@@ -1,6 +1,5 @@
-﻿using EStore.BusinessObject.Entities;
-using EStore.DataAccess.DTOs;
-using EStore.Repositories;
+﻿using EStore.Repositories;
+using EStore.Share.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EStore.Api.Controllers
@@ -16,64 +15,52 @@ namespace EStore.Api.Controllers
             repository = _repository;
         }
         [HttpGet]
-
-        public IActionResult GetAll()
+        public async Task<IActionResult> FindAllAsync(string? search)
         {
-            List<Member> members = repository.GetMembers();
-            return Ok(members);
+            return Ok(await repository.FindAllAsync().ConfigureAwait(false));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> FindByIdAsync(int id)
+        {
+            return Ok(await repository.FindByIdAsync(id).ConfigureAwait(false));
         }
 
         [HttpPost]
-        public IActionResult AddMember(MemberDTO memberDto)
+        public async Task<IActionResult> CreateAsync(MemberDTO product)
         {
-            repository.AddMember(memberDto);
-            return Ok(new BaseDTO<MemberDTO>()
-            {
-                Success = true,
-                Message = "Create new member success",
-                Data = memberDto,
-            });
-        }
-        [HttpPut("id")]
-        public IActionResult UpdateMember(int id, MemberDTO memberDto)
-        {
-            var mTmp = repository.GetMemberByID(id);
-            if (mTmp == null)
-            {
-                return NotFound();
-            }
-            repository.UpdateMember(id, memberDto);
-            return Ok(new BaseDTO<MemberDTO>()
-            {
-                Success = true,
-                Message = $"Update member id {id} success!",
-                Data = memberDto,
-            });
+            return Ok(await repository.CreateAsync(product).ConfigureAwait(false));
         }
 
-        [HttpDelete("id")]
-        public IActionResult DeleteMemeber(int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(int id)
         {
-            var mem = repository.GetMemberByID(id);
-            if (mem == null)
+            var p = await repository.FindByIdAsync(id).ConfigureAwait(false);
+            if (p == null)
             {
                 return NotFound();
             }
-            repository.DeleteMember(mem);
-            return Ok(new BaseDTO<Member>()
+            await repository.DeleteAsync(p).ConfigureAwait(false);
+            return Ok();
+        }
+        [HttpPut("{id}")]
+
+        public async Task<IActionResult> UpdateAsync(int id, MemberDTO productRespond)
+        {
+            var pTmp = await repository.FindByIdAsync(id);
+            if (pTmp == null)
             {
-                Success = true,
-                Message = $"Delete member id {id} success!",
-                Data = mem,
-            });
+                return NotFound();
+            }
+            return Ok(await repository.UpdateAsync(productRespond).ConfigureAwait(false));
         }
 
         [HttpPost("Login")]
-        public ActionResult Login(LoginRequest request)
+        public async Task<IActionResult> LoginAsync(LoginRequest request)
         {
-            if (!repository.Login(request.Email, request.Password)) return BadRequest();
+            if (await repository.LoginAsync(request.Email, request.Password) is not { } meber) return BadRequest();
 
-            return NoContent();
+            return Ok(meber);
         }
     }
 }

@@ -20,6 +20,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\EStore.Repositories\EStore.Repositories.csproj" />
+		<ProjectReference Include="..\EStore.Share\EStore.Share.csproj" />
 	</ItemGroup>
 
 </Project>

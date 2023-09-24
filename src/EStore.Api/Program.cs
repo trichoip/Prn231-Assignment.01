@@ -1,6 +1,7 @@
 using EStore.BusinessObject.Data;
 using EStore.DataAccess;
 using EStore.Repositories;
+using EStore.Share.Profiles;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -8,11 +9,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<FstoreDbContext>(option =>
 {
-    option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")).UseLazyLoadingProxies();
+    option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+    .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+    .UseLazyLoadingProxies();
 });
 
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+builder.Services.AddAutoMapper(typeof(MapperProfiles));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

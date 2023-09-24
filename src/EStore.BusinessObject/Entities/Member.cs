@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace EStore.BusinessObject.Entities;
+﻿namespace EStore.BusinessObject.Entities;
 
 public partial class Member
 {

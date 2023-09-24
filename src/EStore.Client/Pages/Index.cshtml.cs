@@ -1,5 +1,4 @@
-﻿using EStore.DataAccess.DTOs;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EStore.Client.Pages

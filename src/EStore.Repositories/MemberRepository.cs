@@ -1,25 +1,50 @@
-﻿using EStore.BusinessObject.Entities;
+﻿using AutoMapper;
+using EStore.BusinessObject.Entities;
 using EStore.DataAccess;
-using EStore.DataAccess.DTOs;
+using EStore.Share.DTOs;
 
 namespace EStore.Repositories
 {
     public class MemberRepository : IMemberRepository
     {
 
-        private readonly MemberDAO _memberDAO;
-        public MemberRepository(MemberDAO memberDAO) => _memberDAO = memberDAO;
+        private readonly MemberDAO _dao;
+        private readonly IMapper _mapper;
+        public MemberRepository(MemberDAO dao, IMapper mapper)
+        {
 
-        public bool Login(string email, string password) => _memberDAO.Login(email, password);
-        public void AddMember(MemberDTO m) => _memberDAO.AddMember(m);
+            _dao = dao;
+            _mapper = mapper;
+        }
 
-        public void DeleteMember(Member member) => _memberDAO.DeleteMember(member);
+        public async Task<MemberDTO> CreateAsync(MemberDTO entity)
+        {
+            return _mapper.Map<MemberDTO>(await _dao.CreateAsync(_mapper.Map<Member>(entity)).ConfigureAwait(false));
+        }
 
-        public Member GetMemberByID(int id) => _memberDAO.FindMemberById(id);
+        public async Task DeleteAsync(MemberDTO entity)
+        {
+            await _dao.DeleteAsync(_mapper.Map<Member>(entity)).ConfigureAwait(false);
+        }
 
-        public List<Member> GetMembers() => _memberDAO.GetAllMembers();
+        public async Task<IList<MemberDTO>> FindAllAsync()
+        {
+            return _mapper.Map<IList<MemberDTO>>(await _dao.FindAllAsync().ConfigureAwait(false));
+        }
 
-        public void UpdateMember(int id, MemberDTO m) => _memberDAO.UpdateMember(id, m);
+        public async Task<MemberDTO?> FindByIdAsync(int entityId)
+        {
+            return _mapper.Map<MemberDTO?>(await _dao.FindByIdAsync(entityId).ConfigureAwait(false));
+        }
 
+        public async Task<MemberDTO> LoginAsync(string email, string password)
+        {
+            return _mapper.Map<MemberDTO>(await _dao.Login(email, password).ConfigureAwait(false));
+        }
+
+        public async Task<MemberDTO> UpdateAsync(MemberDTO entity)
+        {
+            return _mapper.Map<MemberDTO>(await _dao.UpdateAsync(_mapper.Map<Member>(entity)).ConfigureAwait(false));
+        }
     }
 }

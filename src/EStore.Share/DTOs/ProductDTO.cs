@@ -1,4 +1,4 @@
-﻿namespace EStore.DataAccess.DTOs
+﻿namespace EStore.Share.DTOs
 {
     public class ProductDTO
     {

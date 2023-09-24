@@ -1,4 +1,4 @@
-﻿using EStore.DataAccess.DTOs;
+﻿using EStore.Share.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

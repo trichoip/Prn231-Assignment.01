@@ -1,6 +1,5 @@
-﻿using EStore.BusinessObject.Entities;
-using EStore.DataAccess.DTOs;
-using EStore.Repositories;
+﻿using EStore.Repositories;
+using EStore.Share.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EStore.Api.Controllers
@@ -16,64 +15,46 @@ namespace EStore.Api.Controllers
         {
             repository = _repository;
         }
+
         [HttpGet]
-        public IActionResult GetAll(string? search)
+        public async Task<IActionResult> FindAllAsync(string? search)
         {
-            List<ProductDTO> products = repository.GetProducts(search);
-            return Ok(products);
+            return Ok(await repository.FindAllAsync().ConfigureAwait(false));
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetProductByID(int id)
+        public async Task<IActionResult> FindByIdAsync(int id)
         {
-            Product productRespond = repository.GetProductByID(id);
-            return Ok(productRespond);
+            return Ok(await repository.FindByIdAsync(id).ConfigureAwait(false));
         }
 
         [HttpPost]
-        public IActionResult PostProduct(ProductDTO product)
+        public async Task<IActionResult> CreateAsync(ProductDTO product)
         {
-            repository.SaveProduct(product);
-            return Ok(new BaseDTO<ProductDTO>()
-            {
-                Success = true,
-                Message = "Create new product success",
-                Data = product,
-            });
+            return Ok(await repository.CreateAsync(product).ConfigureAwait(false));
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteProduct(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
-            var p = repository.GetProductByID(id);
+            var p = await repository.FindByIdAsync(id).ConfigureAwait(false);
             if (p == null)
             {
                 return NotFound();
             }
-            repository.DeleteProduct(p);
-            return Ok(new BaseDTO<Product>()
-            {
-                Success = true,
-                Message = $"Delete product id {id} success",
-                Data = p,
-            });
+            await repository.DeleteAsync(p).ConfigureAwait(false);
+            return Ok();
         }
         [HttpPut("{id}")]
 
-        public IActionResult UpdateProduct(int id, ProductDTO productRespond)
+        public async Task<IActionResult> UpdateAsync(int id, ProductDTO productRespond)
         {
-            var pTmp = repository.GetProductByID(id);
+            var pTmp = await repository.FindByIdAsync(id);
             if (pTmp == null)
             {
                 return NotFound();
             }
-            repository.UpdateProduct(id, productRespond);
-            return Ok(new BaseDTO<ProductDTO>()
-            {
-                Success = true,
-                Message = $"Update product id {id} success!",
-                Data = productRespond,
-            });
+            return Ok(await repository.UpdateAsync(productRespond).ConfigureAwait(false));
         }
 
     }

@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EStore.BusinessObject", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EStore.Repositories", "src\EStore.Repositories\EStore.Repositories.csproj", "{C76F15AB-87DE-4A83-813E-E2215689437B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EStore.Share", "src\EStore.Share\EStore.Share.csproj", "{3FA08170-0AA0-4BF1-87E5-DD5912083424}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{C76F15AB-87DE-4A83-813E-E2215689437B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C76F15AB-87DE-4A83-813E-E2215689437B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C76F15AB-87DE-4A83-813E-E2215689437B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FA08170-0AA0-4BF1-87E5-DD5912083424}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FA08170-0AA0-4BF1-87E5-DD5912083424}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FA08170-0AA0-4BF1-87E5-DD5912083424}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FA08170-0AA0-4BF1-87E5-DD5912083424}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

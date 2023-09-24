@@ -1,6 +1,5 @@
-﻿using EStore.BusinessObject.Entities;
-using EStore.DataAccess.DTOs;
-using EStore.Repositories;
+﻿using EStore.Repositories;
+using EStore.Share.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EStore.Api.Controllers
@@ -17,55 +16,39 @@ namespace EStore.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllCategory()
+        public async Task<IActionResult> FindAllAsync(string? search)
         {
-            List<CategoryDTO> categoryResponds = repository.categoryResponds();
-            return Ok(categoryResponds);
-
+            return Ok(await repository.FindAllAsync().ConfigureAwait(false));
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> FindByIdAsync(int id)
+        {
+            return Ok(await repository.FindByIdAsync(id).ConfigureAwait(false));
+        }
+
         [HttpPost]
-        public IActionResult CreateCategory(CategoryDTO category)
+        public async Task<IActionResult> CreateAsync(CategoryDTO product)
         {
-            repository.CreateCategory(category);
-            return Ok(new BaseDTO<CategoryDTO>()
-            {
-                Success = true,
-                Message = "Create new product success",
-                Data = category,
-            });
+            return Ok(await repository.CreateAsync(product).ConfigureAwait(false));
         }
 
-        [HttpDelete("id")]
-        public IActionResult DeleteCategory(int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(int id)
         {
-            var c = repository.GetCategoryByID(id);
-            if (c == null)
-            {
-                return NotFound();
-            }
-            repository.DeleteCategory(c);
-            return Ok(new BaseDTO<Category>()
-            {
-                Success = true,
-                Message = $"Delete product id {id} success",
-                Data = c,
-            });
+            await repository.DeleteAsync(id).ConfigureAwait(false);
+            return Ok();
         }
-        [HttpPut("id")]
-        public IActionResult UpdateCategory(int id, CategoryDTO categoryRespond)
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAsync(int id, CategoryDTO productRespond)
         {
-            var pTmp = repository.GetCategoryByID(id);
+            var pTmp = await repository.FindByIdAsync(id);
             if (pTmp == null)
             {
                 return NotFound();
             }
-            repository.UpdateCategory(id, categoryRespond);
-            return Ok(new BaseDTO<CategoryDTO>()
-            {
-                Success = true,
-                Message = $"Update category id {id} success!",
-                Data = categoryRespond,
-            });
+            return Ok(await repository.UpdateAsync(id, productRespond).ConfigureAwait(false));
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using EStore.BusinessObject.Entities;
-using EStore.DataAccess.DTOs;
+using EStore.Share.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;

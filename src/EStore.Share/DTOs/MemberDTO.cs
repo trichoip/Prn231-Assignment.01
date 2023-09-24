@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EStore.DataAccess.DTOs
+namespace EStore.Share.DTOs
 {
     public class MemberDTO
     {

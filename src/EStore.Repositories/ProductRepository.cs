@@ -1,22 +1,44 @@
-﻿using EStore.BusinessObject.Entities;
+﻿using AutoMapper;
+using EStore.BusinessObject.Entities;
 using EStore.DataAccess;
-using EStore.DataAccess.DTOs;
+using EStore.Share.DTOs;
 
 namespace EStore.Repositories
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly ProductDAO _productDAO;
-        public ProductRepository(ProductDAO productDAO) => _productDAO = productDAO;
+        private readonly ProductDAO _dao;
+        private readonly IMapper _mapper;
+        public ProductRepository(ProductDAO dao, IMapper mapper)
+        {
 
-        public void DeleteProduct(Product p) => _productDAO.DeleteProduct(p);
+            _dao = dao;
+            _mapper = mapper;
+        }
 
-        public Product GetProductByID(int id) => _productDAO.FindProductById(id);
+        public async Task<ProductDTO> CreateAsync(ProductDTO entity)
+        {
+            return _mapper.Map<ProductDTO>(await _dao.CreateAsync(_mapper.Map<Product>(entity)).ConfigureAwait(false));
+        }
 
-        public List<ProductDTO> GetProducts(string search) => _productDAO.GetProducts(search);
+        public async Task DeleteAsync(ProductDTO entity)
+        {
+            await _dao.DeleteAsync(_mapper.Map<Product>(entity)).ConfigureAwait(false);
+        }
 
-        public void SaveProduct(ProductDTO p) => _productDAO.SaveProduct(p);
+        public async Task<IList<ProductDTO>> FindAllAsync()
+        {
+            return _mapper.Map<IList<ProductDTO>>(await _dao.FindAllAsync().ConfigureAwait(false));
+        }
 
-        public void UpdateProduct(int id, ProductDTO p) => _productDAO.UpdateProduct(id, p);
+        public async Task<ProductDTO?> FindByIdAsync(int entityId)
+        {
+            return _mapper.Map<ProductDTO?>(await _dao.FindByIdAsync(entityId).ConfigureAwait(false));
+        }
+
+        public async Task<ProductDTO> UpdateAsync(ProductDTO entity)
+        {
+            return _mapper.Map<ProductDTO>(await _dao.UpdateAsync(_mapper.Map<Product>(entity)).ConfigureAwait(false));
+        }
     }
 }

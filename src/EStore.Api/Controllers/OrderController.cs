@@ -1,6 +1,5 @@
-﻿using EStore.BusinessObject.Entities;
-using EStore.DataAccess.DTOs;
-using EStore.Repositories;
+﻿using EStore.Repositories;
+using EStore.Share.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EStore.Api.Controllers
@@ -15,40 +14,46 @@ namespace EStore.Api.Controllers
         {
             repository = _repository;
         }
+
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> FindAllAsync(string? search)
         {
-            List<Order> orders = repository.GetOrders();
-            return Ok(orders);
+            return Ok(await repository.FindAllAsync().ConfigureAwait(false));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> FindByIdAsync(int id)
+        {
+            return Ok(await repository.FindByIdAsync(id).ConfigureAwait(false));
         }
 
         [HttpPost]
-        public IActionResult AddOrder(OrderDTO orderDto)
+        public async Task<IActionResult> CreateAsync(OrderDTO product)
         {
-            repository.SaveOrder(orderDto);
-            return Ok(new BaseDTO<OrderDTO>()
-            {
-                Success = true,
-                Message = "Create new product success",
-                Data = orderDto,
-            });
+            return Ok(await repository.CreateAsync(product).ConfigureAwait(false));
         }
 
-        [HttpPut("id")]
-        public IActionResult UpdateOrder(int id, OrderDTO orderDto)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(int id)
         {
-            var ordTmp = repository.GetOrderByID(id);
-            if (ordTmp == null)
+            var p = await repository.FindByIdAsync(id).ConfigureAwait(false);
+            if (p == null)
             {
                 return NotFound();
             }
-            repository.UpdateOrder(id, orderDto);
-            return Ok(new BaseDTO<OrderDTO>()
+            await repository.DeleteAsync(p).ConfigureAwait(false);
+            return Ok();
+        }
+        [HttpPut("{id}")]
+
+        public async Task<IActionResult> UpdateAsync(int id, OrderDTO productRespond)
+        {
+            var pTmp = await repository.FindByIdAsync(id);
+            if (pTmp == null)
             {
-                Success = true,
-                Message = $"Update product id {id} success!",
-                Data = orderDto,
-            });
+                return NotFound();
+            }
+            return Ok(await repository.UpdateAsync(productRespond).ConfigureAwait(false));
         }
 
     }

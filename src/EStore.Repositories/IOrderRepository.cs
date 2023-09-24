@@ -1,16 +1,13 @@
-﻿using EStore.BusinessObject.Entities;
-using EStore.DataAccess.DTOs;
+﻿using EStore.Share.DTOs;
 
 namespace EStore.Repositories
 {
     public interface IOrderRepository
     {
-        void SaveOrder(OrderDTO ord);
-
-        Order GetOrderByID(int id);
-
-        void UpdateOrder(int id, OrderDTO ord);
-
-        List<Order> GetOrders();
+        Task<IList<OrderDTO>> FindAllAsync();
+        Task<OrderDTO> CreateAsync(OrderDTO entity);
+        Task<OrderDTO> UpdateAsync(OrderDTO entity);
+        Task DeleteAsync(OrderDTO entity);
+        Task<OrderDTO?> FindByIdAsync(int entityId);
     }
 }
