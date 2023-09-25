@@ -10,7 +10,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<FstoreDbContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-    .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
     .UseLazyLoadingProxies();
 });
 
@@ -26,6 +25,7 @@ builder.Services.AddScoped<CategoryDAO>();
 builder.Services.AddScoped<MemberDAO>();
 builder.Services.AddScoped<OrderDAO>();
 builder.Services.AddScoped<ProductDAO>();
+builder.Services.AddScoped<OrderDetailDAO>();
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IMemberRepository, MemberRepository>();
@@ -38,6 +38,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var dataContext = scope.ServiceProvider.GetRequiredService<FstoreDbContext>();
+    dataContext.Database.EnsureDeleted();
     dataContext.Database.Migrate();
 }
 

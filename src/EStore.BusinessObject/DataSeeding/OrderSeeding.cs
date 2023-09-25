@@ -11,7 +11,7 @@ namespace EStore.BusinessObject.DataSeeding
             builder.HasData(
                new Order
                {
-                   OrderId = 4665,
+                   OrderId = 1,
                    Freight = 10000,
                    OrderDate = DateTime.Parse("2021-11-05 12:05:07.677"),
                    RequiredDate = DateTime.Parse("2021-11-04 00:00:00.000"),
@@ -20,7 +20,7 @@ namespace EStore.BusinessObject.DataSeeding
                },
                new Order
                {
-                   OrderId = 6113,
+                   OrderId = 2,
                    Freight = 20000,
                    OrderDate = DateTime.Parse("2021-11-05 14:04:07.950"),
                    RequiredDate = DateTime.Parse("2021-11-04 00:00:00.000"),
@@ -29,7 +29,7 @@ namespace EStore.BusinessObject.DataSeeding
                },
                new Order
                {
-                   OrderId = 6259,
+                   OrderId = 3,
                    Freight = 15000,
                    OrderDate = DateTime.Parse("2021-11-05 14:02:50.557"),
                    RequiredDate = DateTime.Parse("2021-11-06 00:00:00.000"),

@@ -6,6 +6,11 @@ namespace EStore.BusinessObject.Data;
 
 public partial class FstoreDbContext : DbContext
 {
+    //public FstoreDbContext()
+    //{
+
+    //}
+
     public FstoreDbContext(DbContextOptions<FstoreDbContext> options)
         : base(options)
     {
@@ -19,6 +24,11 @@ public partial class FstoreDbContext : DbContext
     public virtual DbSet<OrderDetail> OrderDetails { get; set; }
 
     public virtual DbSet<Product> Products { get; set; }
+
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //{
+    //    optionsBuilder.UseSqlServer("Server=(local);uid=sa;pwd=12345;database=FStoreDB;TrustServerCertificate=True");
+    //}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -71,6 +81,8 @@ public partial class FstoreDbContext : DbContext
             //    .HasForeignKey(d => d.MemberId)
             //    .OnDelete(DeleteBehavior.Cascade)
             //    .HasConstraintName("FK__Order__MemberId__267ABA7A");
+
+            entity.Navigation(e => e.OrderDetails).AutoInclude();
 
         });
 

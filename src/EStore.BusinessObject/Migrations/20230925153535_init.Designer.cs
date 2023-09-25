@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EStore.BusinessObject.Migrations
 {
     [DbContext(typeof(FstoreDbContext))]
-    [Migration("20230921120212_AddData")]
-    partial class AddData
+    [Migration("20230925153535_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace EStore.BusinessObject.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("EStore.BusinessObject.Models.Category", b =>
+            modelBuilder.Entity("EStore.BusinessObject.Entities.Category", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
@@ -56,7 +56,7 @@ namespace EStore.BusinessObject.Migrations
                         });
                 });
 
-            modelBuilder.Entity("EStore.BusinessObject.Models.Member", b =>
+            modelBuilder.Entity("EStore.BusinessObject.Entities.Member", b =>
                 {
                     b.Property<int>("MemberId")
                         .ValueGeneratedOnAdd()
@@ -128,7 +128,7 @@ namespace EStore.BusinessObject.Migrations
                         });
                 });
 
-            modelBuilder.Entity("EStore.BusinessObject.Models.Order", b =>
+            modelBuilder.Entity("EStore.BusinessObject.Entities.Order", b =>
                 {
                     b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd()
@@ -142,7 +142,7 @@ namespace EStore.BusinessObject.Migrations
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("OrderDate")
+                    b.Property<DateTime?>("OrderDate")
                         .HasColumnType("datetime");
 
                     b.Property<DateTime?>("RequiredDate")
@@ -160,7 +160,7 @@ namespace EStore.BusinessObject.Migrations
                     b.HasData(
                         new
                         {
-                            OrderId = 4665,
+                            OrderId = 1,
                             Freight = 10000m,
                             MemberId = 1,
                             OrderDate = new DateTime(2021, 11, 5, 12, 5, 7, 677, DateTimeKind.Unspecified),
@@ -169,7 +169,7 @@ namespace EStore.BusinessObject.Migrations
                         },
                         new
                         {
-                            OrderId = 6113,
+                            OrderId = 2,
                             Freight = 20000m,
                             MemberId = 2,
                             OrderDate = new DateTime(2021, 11, 5, 14, 4, 7, 950, DateTimeKind.Unspecified),
@@ -178,7 +178,7 @@ namespace EStore.BusinessObject.Migrations
                         },
                         new
                         {
-                            OrderId = 6259,
+                            OrderId = 3,
                             Freight = 15000m,
                             MemberId = 1,
                             OrderDate = new DateTime(2021, 11, 5, 14, 2, 50, 557, DateTimeKind.Unspecified),
@@ -190,40 +190,40 @@ namespace EStore.BusinessObject.Migrations
                             OrderId = 4,
                             Freight = 10m,
                             MemberId = 1,
-                            OrderDate = new DateTime(2023, 9, 21, 19, 2, 12, 670, DateTimeKind.Local).AddTicks(6080),
-                            RequiredDate = new DateTime(2023, 9, 28, 19, 2, 12, 670, DateTimeKind.Local).AddTicks(6089),
-                            ShippedDate = new DateTime(2023, 9, 28, 19, 2, 12, 670, DateTimeKind.Local).AddTicks(6094)
+                            OrderDate = new DateTime(2023, 9, 25, 22, 35, 35, 309, DateTimeKind.Local).AddTicks(2412),
+                            RequiredDate = new DateTime(2023, 10, 2, 22, 35, 35, 309, DateTimeKind.Local).AddTicks(2424),
+                            ShippedDate = new DateTime(2023, 10, 2, 22, 35, 35, 309, DateTimeKind.Local).AddTicks(2428)
                         },
                         new
                         {
                             OrderId = 5,
                             Freight = 10m,
                             MemberId = 2,
-                            OrderDate = new DateTime(2023, 9, 21, 19, 2, 12, 670, DateTimeKind.Local).AddTicks(6095),
-                            RequiredDate = new DateTime(2023, 9, 28, 19, 2, 12, 670, DateTimeKind.Local).AddTicks(6096),
-                            ShippedDate = new DateTime(2023, 9, 28, 19, 2, 12, 670, DateTimeKind.Local).AddTicks(6096)
+                            OrderDate = new DateTime(2023, 9, 25, 22, 35, 35, 309, DateTimeKind.Local).AddTicks(2431),
+                            RequiredDate = new DateTime(2023, 10, 2, 22, 35, 35, 309, DateTimeKind.Local).AddTicks(2432),
+                            ShippedDate = new DateTime(2023, 10, 2, 22, 35, 35, 309, DateTimeKind.Local).AddTicks(2433)
                         },
                         new
                         {
                             OrderId = 6,
                             Freight = 10m,
                             MemberId = 2,
-                            OrderDate = new DateTime(2023, 9, 21, 19, 2, 12, 670, DateTimeKind.Local).AddTicks(6098),
-                            RequiredDate = new DateTime(2023, 9, 28, 19, 2, 12, 670, DateTimeKind.Local).AddTicks(6098),
-                            ShippedDate = new DateTime(2023, 9, 28, 19, 2, 12, 670, DateTimeKind.Local).AddTicks(6099)
+                            OrderDate = new DateTime(2023, 9, 25, 22, 35, 35, 309, DateTimeKind.Local).AddTicks(2435),
+                            RequiredDate = new DateTime(2023, 10, 2, 22, 35, 35, 309, DateTimeKind.Local).AddTicks(2435),
+                            ShippedDate = new DateTime(2023, 10, 2, 22, 35, 35, 309, DateTimeKind.Local).AddTicks(2436)
                         },
                         new
                         {
                             OrderId = 7,
                             Freight = 10m,
                             MemberId = 2,
-                            OrderDate = new DateTime(2023, 9, 21, 19, 2, 12, 670, DateTimeKind.Local).AddTicks(6100),
-                            RequiredDate = new DateTime(2023, 9, 28, 19, 2, 12, 670, DateTimeKind.Local).AddTicks(6101),
-                            ShippedDate = new DateTime(2023, 9, 28, 19, 2, 12, 670, DateTimeKind.Local).AddTicks(6102)
+                            OrderDate = new DateTime(2023, 9, 25, 22, 35, 35, 309, DateTimeKind.Local).AddTicks(2438),
+                            RequiredDate = new DateTime(2023, 10, 2, 22, 35, 35, 309, DateTimeKind.Local).AddTicks(2439),
+                            ShippedDate = new DateTime(2023, 10, 2, 22, 35, 35, 309, DateTimeKind.Local).AddTicks(2439)
                         });
                 });
 
-            modelBuilder.Entity("EStore.BusinessObject.Models.OrderDetail", b =>
+            modelBuilder.Entity("EStore.BusinessObject.Entities.OrderDetail", b =>
                 {
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
@@ -249,7 +249,7 @@ namespace EStore.BusinessObject.Migrations
                     b.HasData(
                         new
                         {
-                            OrderId = 4665,
+                            OrderId = 1,
                             ProductId = 1,
                             Discount = 5.0,
                             Quantity = 1,
@@ -257,7 +257,7 @@ namespace EStore.BusinessObject.Migrations
                         },
                         new
                         {
-                            OrderId = 6113,
+                            OrderId = 1,
                             ProductId = 4,
                             Discount = 10.0,
                             Quantity = 3,
@@ -265,7 +265,7 @@ namespace EStore.BusinessObject.Migrations
                         },
                         new
                         {
-                            OrderId = 6113,
+                            OrderId = 2,
                             ProductId = 5,
                             Discount = 15.0,
                             Quantity = 4,
@@ -273,7 +273,7 @@ namespace EStore.BusinessObject.Migrations
                         },
                         new
                         {
-                            OrderId = 6259,
+                            OrderId = 2,
                             ProductId = 2,
                             Discount = 5.0,
                             Quantity = 2,
@@ -281,7 +281,7 @@ namespace EStore.BusinessObject.Migrations
                         },
                         new
                         {
-                            OrderId = 6259,
+                            OrderId = 3,
                             ProductId = 4,
                             Discount = 5.0,
                             Quantity = 2,
@@ -289,7 +289,7 @@ namespace EStore.BusinessObject.Migrations
                         });
                 });
 
-            modelBuilder.Entity("EStore.BusinessObject.Models.Product", b =>
+            modelBuilder.Entity("EStore.BusinessObject.Entities.Product", b =>
                 {
                     b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
@@ -372,9 +372,9 @@ namespace EStore.BusinessObject.Migrations
                         });
                 });
 
-            modelBuilder.Entity("EStore.BusinessObject.Models.Order", b =>
+            modelBuilder.Entity("EStore.BusinessObject.Entities.Order", b =>
                 {
-                    b.HasOne("EStore.BusinessObject.Models.Member", "Member")
+                    b.HasOne("EStore.BusinessObject.Entities.Member", "Member")
                         .WithMany("Orders")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -383,15 +383,15 @@ namespace EStore.BusinessObject.Migrations
                     b.Navigation("Member");
                 });
 
-            modelBuilder.Entity("EStore.BusinessObject.Models.OrderDetail", b =>
+            modelBuilder.Entity("EStore.BusinessObject.Entities.OrderDetail", b =>
                 {
-                    b.HasOne("EStore.BusinessObject.Models.Order", "Order")
+                    b.HasOne("EStore.BusinessObject.Entities.Order", "Order")
                         .WithMany("OrderDetails")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EStore.BusinessObject.Models.Product", "Product")
+                    b.HasOne("EStore.BusinessObject.Entities.Product", "Product")
                         .WithMany("OrderDetails")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -402,9 +402,9 @@ namespace EStore.BusinessObject.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("EStore.BusinessObject.Models.Product", b =>
+            modelBuilder.Entity("EStore.BusinessObject.Entities.Product", b =>
                 {
-                    b.HasOne("EStore.BusinessObject.Models.Category", "Category")
+                    b.HasOne("EStore.BusinessObject.Entities.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -413,22 +413,22 @@ namespace EStore.BusinessObject.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("EStore.BusinessObject.Models.Category", b =>
+            modelBuilder.Entity("EStore.BusinessObject.Entities.Category", b =>
                 {
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("EStore.BusinessObject.Models.Member", b =>
+            modelBuilder.Entity("EStore.BusinessObject.Entities.Member", b =>
                 {
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("EStore.BusinessObject.Models.Order", b =>
+            modelBuilder.Entity("EStore.BusinessObject.Entities.Order", b =>
                 {
                     b.Navigation("OrderDetails");
                 });
 
-            modelBuilder.Entity("EStore.BusinessObject.Models.Product", b =>
+            modelBuilder.Entity("EStore.BusinessObject.Entities.Product", b =>
                 {
                     b.Navigation("OrderDetails");
                 });

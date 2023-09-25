@@ -18,27 +18,38 @@ namespace EStore.Repositories
 
         public async Task<ProductDTO> CreateAsync(ProductDTO entity)
         {
-            return _mapper.Map<ProductDTO>(await _dao.CreateAsync(_mapper.Map<Product>(entity)).ConfigureAwait(false));
-        }
-
-        public async Task DeleteAsync(ProductDTO entity)
-        {
-            await _dao.DeleteAsync(_mapper.Map<Product>(entity)).ConfigureAwait(false);
+            var en = _mapper.Map<Product>(entity);
+            en = await _dao.CreateAsync(en).ConfigureAwait(false);
+            var enDTO = _mapper.Map<ProductDTO>(en);
+            return enDTO;
         }
 
         public async Task<IList<ProductDTO>> FindAllAsync()
         {
-            return _mapper.Map<IList<ProductDTO>>(await _dao.FindAllAsync().ConfigureAwait(false));
+            var entities = await _dao.FindAllAsync().ConfigureAwait(false);
+            var entityDTOs = _mapper.Map<IList<ProductDTO>>(entities);
+            return entityDTOs;
         }
 
         public async Task<ProductDTO?> FindByIdAsync(int entityId)
         {
-            return _mapper.Map<ProductDTO?>(await _dao.FindByIdAsync(entityId).ConfigureAwait(false));
+            var entity = await _dao.FindByIdAsync(new object?[] { entityId }).ConfigureAwait(false);
+            var entityDTO = _mapper.Map<ProductDTO?>(entity);
+            return entityDTO;
         }
 
         public async Task<ProductDTO> UpdateAsync(ProductDTO entity)
         {
-            return _mapper.Map<ProductDTO>(await _dao.UpdateAsync(_mapper.Map<Product>(entity)).ConfigureAwait(false));
+            var en = _mapper.Map<Product>(entity);
+            en = await _dao.UpdateAsync(en).ConfigureAwait(false);
+            var enDTO = _mapper.Map<ProductDTO>(en);
+            return enDTO;
+        }
+
+        public async Task DeleteAsync(ProductDTO entity)
+        {
+            var en = _mapper.Map<Product>(entity);
+            await _dao.DeleteAsync(en).ConfigureAwait(false);
         }
     }
 }

@@ -44,8 +44,8 @@ namespace EStore.Api.Controllers
             await repository.DeleteAsync(p).ConfigureAwait(false);
             return Ok();
         }
-        [HttpPut("{id}")]
 
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(int id, OrderDTO productRespond)
         {
             var pTmp = await repository.FindByIdAsync(id);

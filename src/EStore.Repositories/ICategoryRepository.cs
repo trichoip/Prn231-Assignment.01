@@ -6,8 +6,8 @@ namespace EStore.Repositories
     {
         Task<IList<CategoryDTO>> FindAllAsync();
         Task<CategoryDTO> CreateAsync(CategoryDTO entity);
-        Task<CategoryDTO> UpdateAsync(int id, CategoryDTO productRespond);
-        Task DeleteAsync(int id);
+        Task<CategoryDTO> UpdateAsync(CategoryDTO entity);
+        Task DeleteAsync(CategoryDTO entity);
         Task<CategoryDTO?> FindByIdAsync(int entityId);
 
     }

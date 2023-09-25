@@ -40,7 +40,6 @@ namespace EStore.DataAccess
 
         public async Task<T> UpdateAsync(T entity)
         {
-            //context.Attach(entity);
             context.Update(entity);
             try
             {
@@ -58,9 +57,11 @@ namespace EStore.DataAccess
             return await context.Set<T>().ToListAsync();
         }
 
-        public async Task<T?> FindByIdAsync(int entityId)
+        public async Task<T?> FindByIdAsync(object?[] entityId)
         {
-            return await context.Set<T>().FindAsync(new object?[] { entityId }).AsTask();
+            var entity = await context.Set<T>().FindAsync(entityId).AsTask();
+            context.Entry(entity).State = EntityState.Detached;
+            return entity;
         }
 
     }

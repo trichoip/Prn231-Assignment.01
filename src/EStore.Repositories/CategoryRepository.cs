@@ -19,32 +19,38 @@ namespace EStore.Repositories
 
         public async Task<CategoryDTO> CreateAsync(CategoryDTO entity)
         {
-            return _mapper.Map<CategoryDTO>(await _dao.CreateAsync(_mapper.Map<Category>(entity)).ConfigureAwait(false));
-        }
-
-        public async Task DeleteAsync(int id)
-        {
-            var p = await _dao.FindByIdAsync(id).ConfigureAwait(false);
-            await _dao.DeleteAsync(p).ConfigureAwait(false);
+            var en = _mapper.Map<Category>(entity);
+            en = await _dao.CreateAsync(en).ConfigureAwait(false);
+            var enDTO = _mapper.Map<CategoryDTO>(en);
+            return enDTO;
         }
 
         public async Task<IList<CategoryDTO>> FindAllAsync()
         {
-            return _mapper.Map<IList<CategoryDTO>>(await _dao.FindAllAsync().ConfigureAwait(false));
+            var entities = await _dao.FindAllAsync().ConfigureAwait(false);
+            var entityDTOs = _mapper.Map<IList<CategoryDTO>>(entities);
+            return entityDTOs;
         }
 
         public async Task<CategoryDTO?> FindByIdAsync(int entityId)
         {
-            return _mapper.Map<CategoryDTO?>(await _dao.FindByIdAsync(entityId).ConfigureAwait(false));
+            var entity = await _dao.FindByIdAsync(new object?[] { entityId }).ConfigureAwait(false);
+            var entityDTO = _mapper.Map<CategoryDTO?>(entity);
+            return entityDTO;
         }
 
-        public async Task<CategoryDTO> UpdateAsync(int id, CategoryDTO productRespond)
+        public async Task<CategoryDTO> UpdateAsync(CategoryDTO entity)
         {
-            var p = await _dao.FindByIdAsync(id).ConfigureAwait(false);
+            var en = _mapper.Map<Category>(entity);
+            en = await _dao.UpdateAsync(en).ConfigureAwait(false);
+            var enDTO = _mapper.Map<CategoryDTO>(en);
+            return enDTO;
+        }
 
-            _mapper.Map(productRespond, p);
-
-            return _mapper.Map<CategoryDTO>(await _dao.UpdateAsync(p).ConfigureAwait(false));
+        public async Task DeleteAsync(CategoryDTO entity)
+        {
+            var en = _mapper.Map<Category>(entity);
+            await _dao.DeleteAsync(en).ConfigureAwait(false);
         }
 
     }

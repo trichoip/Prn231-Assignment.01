@@ -4,6 +4,7 @@ namespace EStore.Share.DTOs
 {
     public class MemberDTO
     {
+        public int MemberId { get; set; }
         public string Email { get; set; }
 
         public string CompanyName { get; set; }

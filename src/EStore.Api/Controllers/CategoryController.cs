@@ -16,7 +16,7 @@ namespace EStore.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> FindAllAsync(string? search)
+        public async Task<IActionResult> FindAllAsync()
         {
             return Ok(await repository.FindAllAsync().ConfigureAwait(false));
         }
@@ -36,7 +36,9 @@ namespace EStore.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            await repository.DeleteAsync(id).ConfigureAwait(false);
+            var entity = await repository.FindByIdAsync(id);
+
+            await repository.DeleteAsync(entity).ConfigureAwait(false);
             return Ok();
         }
 
@@ -48,7 +50,7 @@ namespace EStore.Api.Controllers
             {
                 return NotFound();
             }
-            return Ok(await repository.UpdateAsync(id, productRespond).ConfigureAwait(false));
+            return Ok(await repository.UpdateAsync(pTmp).ConfigureAwait(false));
         }
     }
 }

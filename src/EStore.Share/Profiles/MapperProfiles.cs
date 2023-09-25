@@ -13,6 +13,7 @@ namespace EStore.Share.Profiles
             CreateMap<Category, CategoryDTO>().ReverseMap();
             CreateMap<Member, MemberDTO>().ReverseMap();
             CreateMap<Order, OrderDTO>().ReverseMap();
+            CreateMap<OrderDetail, OrderDetailDTO>().ReverseMap();
         }
 
     }
